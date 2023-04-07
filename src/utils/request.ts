@@ -8,7 +8,7 @@ import 'nprogress/nprogress.css'
 export interface Result<T = any> {
     code: number
     message: string
-    data: T
+    body: T
 }
 
 const service: AxiosInstance = axios.create({
@@ -22,7 +22,7 @@ service.interceptors.request.use(
         // 在发送请求之前做些什么
         NProgress.configure({ showSpinner: false })
         NProgress.start()
-
+        console.log(config)
         return Promise.resolve(config)
     },
     (error: AxiosError) => {
@@ -33,7 +33,6 @@ service.interceptors.request.use(
 // 添加响应拦截器
 service.interceptors.response.use(
     (response) => {
-        // 对响应数据做点什么
         NProgress.configure({ showSpinner: false })
         NProgress.done()
         console.log(response.data)
@@ -41,22 +40,20 @@ service.interceptors.response.use(
         return Promise.resolve(response.data)
     },
     (error) => {
-        // 对响应错误做点什么
         NProgress.configure({ showSpinner: false })
         NProgress.done()
         return Promise.reject(error)
     }
 )
 
-/* 导出封装的请求方法 */
 export const http = {
-    get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
-        return service.get(url, config)
+    get<T = any>(url: string, config?: any): Promise<T> {
+        return service.get(url, { params: config })
     },
 
     post<T = any>(
         url: string,
-        data?: object,
+        data?: T,
         config?: AxiosRequestConfig
     ): Promise<T> {
         return service.post(url, data, config)
@@ -64,7 +61,7 @@ export const http = {
 
     put<T = any>(
         url: string,
-        data?: object,
+        data?: T,
         config?: AxiosRequestConfig
     ): Promise<T> {
         return service.put(url, data, config)

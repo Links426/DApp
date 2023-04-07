@@ -33,10 +33,13 @@ declare module '@vue/runtime-core' {
     AStatistic: typeof import('@arco-design/web-vue')['Statistic']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
     ATable: typeof import('@arco-design/web-vue')['Table']
+    Button: typeof import('./src/components/button.vue')['default']
     Charts: typeof import('./src/components/charts/index.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    MyButton: typeof import('./src/components/my-button.vue')['default']
     MyEcharts: typeof import('./src/components/charts/myEcharts.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SelectButton: typeof import('./src/components/select-button.vue')['default']
   }
 }

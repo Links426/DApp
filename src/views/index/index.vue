@@ -1,153 +1,195 @@
 <template>
-    <a-layout style="height: 100vh">
-        <a-layout-header
-            h-60px
-            flex
-            items-center
-            px-24px
-            justify-between
-            class="header-shadow"
-            ><div flex-center>
-                <img src="@/assets/img/answer.png" w-20px h-28px mr-12px />
-                <span>Mechanical Pro</span>
-            </div>
-            <div>
-                <a-button @click="changeColor">换色黑</a-button>
-                <a-button @click="changeColor1">换色亮</a-button>
-            </div>
-        </a-layout-header>
-        <a-layout>
-            <a-layout-sider
-                breakpoint="lg"
-                :width="220"
-                collapsible
-                :collapsed="collapsed"
-                @collapse="onCollapse"
-            >
-                <div />
-                <a-menu
-                    :defaultOpenKeys="router.currentRoute.value.meta.openKeys"
-                    :defaultSelectedKeys="
-                        router.currentRoute.value.meta.selectKeys
-                    "
-                    @menu-item-click="To"
+    <div h-500px mb-220px class="box-bg">
+        <div w-full h-full class="glass-bg">
+            <div class="linear-bg h-full">
+                <div
+                    h-80px
+                    flex
+                    justify-between
+                    text-white
+                    items-center
+                    px-12px
+                    py-16px
+                    mb-20px
                 >
-                    <a-sub-menu key="0">
-                        <template #icon><icon-apps></icon-apps></template>
-                        <template #title>仪表台</template>
-                        <a-menu-item key="0_0">工作台</a-menu-item>
-                    </a-sub-menu>
-                    <a-sub-menu key="1">
-                        <template #icon><icon-apps></icon-apps></template>
-                        <template #title>数据可视化</template>
-                        <a-menu-item key="1_0">分析页</a-menu-item>
-                        <a-menu-item key="1_1">多维数据分析</a-menu-item>
-                    </a-sub-menu>
-                    <a-sub-menu key="2">
-                        <template #icon><icon-apps></icon-apps></template>
-                        <template #title>个人中心</template>
-                        <a-menu-item key="2_0">用户信息</a-menu-item>
-                        <a-menu-item key="2_1">用户设置</a-menu-item>
-                    </a-sub-menu>
-                </a-menu>
-            </a-layout-sider>
-            <a-layout-content class="w-full p-20px content-bg">
-                <a-breadcrumb :routes="routesList" mb-16px>
-                    <template #item-render="{ route, paths }">
-                        <a-link @click="toBrumbPage(paths)">{{
-                            route.meta.label
-                        }}</a-link>
-                    </template>
-                </a-breadcrumb>
-                <router-view v-slot="{ Component }">
-                    <transition name="fade" mode="out-in">
-                        <keep-alive>
-                            <component :is="Component" />
-                        </keep-alive>
-                    </transition>
-                </router-view>
-            </a-layout-content>
-        </a-layout>
-    </a-layout>
+                    <div font-bold text-24px>DApp</div>
+                    <input
+                        type="text"
+                        placeholder="Search items, collections, and accounts"
+                        class="linear-bg-input"
+                    />
+                    <MyButton><template #content>randow</template></MyButton>
+                </div>
+                <div px-16px>
+                    <div flex mb-16px class="linear-bg-nav-select">
+                        <SelButton
+                            mr-8px
+                            v-for="button in indexButtonList"
+                            :key="button.id"
+                            :class="
+                                button.id === selectNum
+                                    ? 'linear-bg-button-selected'
+                                    : ''
+                            "
+                            @click="toPage(button.id)"
+                            ><template #content>{{
+                                button.value
+                            }}</template></SelButton
+                        >
+                    </div>
+                    <div class="w-full h-500px linear-bg-carousel relative">
+                        <div
+                            absolute
+                            bottom-30px
+                            left-30px
+                            z-10
+                            text-white
+                            font-600
+                        >
+                            <div text-36px font-bold max-w-500px mb-6px>
+                                Long Neckie Vibes on the Go by Nyla Hayes
+                            </div>
+                            <div mb-6px>By lin</div>
+                            <div>edition .0.019</div>
+                        </div>
+                        <div
+                            class="w-full h-full linear-bg-carousel-img text-white"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div px-16px mb-16px>
+        <div font-bold text-24px mb-6px>Top Collector Buys Today</div>
+        <div class="flex flex-nowrap py-10px linear-bg-nav-select">
+            <div
+                class="card mr-16px mb-20px"
+                v-for="card in cardsList"
+                :key="card.id"
+            >
+                <img
+                    src="@/assets/background.jpg"
+                    w-full
+                    h-200px
+                    rounded-t-20px
+                />
+                <div p-16px>
+                    <div font-bold>{{ card.name }}</div>
+                    <div flex justify-between mt-12px>
+                        <div>
+                            <div class="text-12px text-#646D75">FLOOR</div>
+                            <div>{{ card.floor }}</div>
+                        </div>
+                        <div>
+                            <div class="text-12px text-#646D75">
+                                TOTAL VOLUME
+                            </div>
+                            <div>{{ card.volume }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script setup lang="ts">
-const router = useRouter()
+const indexButtonList = [
+    { id: 0, value: 'All' },
+    { id: 1, value: 'Art' },
+    { id: 2, value: 'Gaming' },
+    { id: 3, value: 'Memberships' },
+    { id: 4, value: 'PFPs' },
+    { id: 5, value: 'Photography' },
+]
+const cardsList = [
+    { id: 0, name: 'Nakamigos', floor: 0.73, volume: 1333 },
+    { id: 1, name: 'XXD34D', floor: 0.01, volume: 52 },
+    { id: 2, name: 'Delabs Adventure Pass Official', floor: 0.14, volume: 100 },
+    { id: 4, name: 'Gemesis', floor: 0.04, volume: 405 },
+    { id: 5, name: 'Gemesis', floor: 0.04, volume: 405 },
+    { id: 6, name: 'Gemesis', floor: 0.04, volume: 405 },
+]
 
-const collapsed = ref(false)
+const selectNum = ref(0)
 
-const routesList: any = ref([])
-const onCollapse = (val: boolean) => {
-    collapsed.value = val
-}
-
-const To = (key: string) => {
-    if (key === '0_0') {
-        router.push('/main')
-    } else if (key === '1_0') {
-        router.push('/data/analyse')
-    } else if (key === '2_0') {
-        router.push('/personal/info')
-    } else if (key === '2_1') {
-        router.push('/personal/setting')
-    }
-}
-
-const useKeys = ['path', 'meta']
-onBeforeRouteUpdate((to: any) => {
-    const newArr: any = []
-    to.matched.forEach(
-        (item: { [s: string]: unknown } | ArrayLike<unknown>) => {
-            const list = Object.entries(item).filter(([key]) =>
-                useKeys.includes(key)
-            )
-            const newItem = Object.fromEntries(list)
-            newArr.push(newItem)
-        }
-    )
-    routesList.value = newArr
-})
-
-const toBrumbPage = (paths: string | any[]) => {
-    router.push('/' + paths[paths.length - 1])
-}
-
-onMounted(() => {
-    const newArr: any = []
-    router.currentRoute.value.matched.forEach((item) => {
-        const list = Object.entries(item).filter(([key]) =>
-            useKeys.includes(key)
-        )
-        const newItem = Object.fromEntries(list)
-        newArr.push(newItem)
-    })
-    routesList.value = newArr
-})
-
-const changeColor = () => {
-    document.body.setAttribute('arco-theme', 'dark')
-}
-const changeColor1 = () => {
-    document.body.setAttribute('arco-theme', 'light')
+const toPage = (id: number) => {
+    selectNum.value = id
 }
 </script>
 
 <style scoped>
-.header-shadow {
-    z-index: 15;
-    background-color: var(--color-bg-2);
-    color: var(--color-neutral-10);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.box-bg {
+    background-image: url('@/assets/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
-.content-bg {
-    background-color: var(--color-neutral-1);
+.glass-bg {
+    background: rgba(216, 216, 216, 0.01);
+
+    backdrop-filter: blur(16px);
 }
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.3s ease;
+.linear-bg {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, #ffffff 100%);
 }
 
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
+.linear-bg-input {
+    width: 50%;
+    height: 100%;
+    border: 0;
+    padding-left: 12px;
+    border-radius: 12px;
+    font-weight: 500;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
+}
+.linear-bg-input::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    transition: all 0.3s;
+}
+.linear-bg-input:hover {
+    transition: all 0.3s;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.linear-bg-nav-select {
+    overflow: scroll;
+}
+.linear-bg-nav-select::-webkit-scrollbar {
+    width: 0 !important;
+}
+.linear-bg-button-selected {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+.linear-bg-carousel {
+    overflow: hidden;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.linear-bg-carousel-img:hover {
+    transform: scale(1.1);
+    transition: all 0.3s;
+}
+.linear-bg-carousel-img {
+    transition: all 0.3s;
+    background-image: url('@/assets/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+.card {
+    min-width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px;
+}
+.card:hover {
+    transform: translateY(-2%);
+    transition: all 0.3s;
 }
 </style>
