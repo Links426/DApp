@@ -47,23 +47,15 @@ service.interceptors.response.use(
 )
 
 export const http = {
-    get<T = any>(url: string, config?: any): Promise<T> {
+    get<T>(url: string, config?: any): Promise<T> {
         return service.get(url, { params: config })
     },
 
-    post<T = any>(
-        url: string,
-        data?: T,
-        config?: AxiosRequestConfig
-    ): Promise<T> {
+    post<T>(url: string, data?: T, config?: AxiosRequestConfig): Promise<T> {
         return service.post(url, data, config)
     },
 
-    put<T = any>(
-        url: string,
-        data?: T,
-        config?: AxiosRequestConfig
-    ): Promise<T> {
+    put<T>(url: string, data?: T, config?: AxiosRequestConfig): Promise<T> {
         return service.put(url, data, config)
     },
 

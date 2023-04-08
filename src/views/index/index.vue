@@ -1,5 +1,12 @@
 <template>
-    <div h-500px mb-220px class="box-bg">
+    <div
+        h-500px
+        mb-220px
+        :style="{
+            backgroundImage: 'url(' + coverImgName + ')',
+        }"
+        class="box-bg"
+    >
         <div w-full h-full class="glass-bg">
             <div class="linear-bg h-full">
                 <div
@@ -12,13 +19,13 @@
                     py-16px
                     mb-20px
                 >
-                    <div font-bold text-24px>DApp</div>
+                    <div font-bold text-24px>CARBAN ASSET</div>
                     <input
                         type="text"
                         placeholder="Search items, collections, and accounts"
                         class="linear-bg-input"
                     />
-                    <MyButton><template #content>randow</template></MyButton>
+                    <div></div>
                 </div>
                 <div px-16px>
                     <div flex mb-16px class="linear-bg-nav-select">
@@ -47,13 +54,24 @@
                             font-600
                         >
                             <div text-36px font-bold max-w-500px mb-6px>
-                                Long Neckie Vibes on the Go by Nyla Hayes
+                                Carbon asset infos
                             </div>
                             <div mb-6px>By lin</div>
                             <div>edition .0.019</div>
                         </div>
+                        <div absolute z-11 right-30px bottom-30px flex>
+                            <div class="linear-bg-carousel-button flex-center mr-12px">
+                                查看视频介绍
+                            </div>
+                            <div class="linear-bg-carousel-button flex-center">
+                                立即购买
+                            </div>
+                        </div>
                         <div
                             class="w-full h-full linear-bg-carousel-img text-white"
+                            :style="{
+                                backgroundImage: 'url(' + coverImgName + ')',
+                            }"
                         ></div>
                     </div>
                 </div>
@@ -62,17 +80,20 @@
     </div>
     <div px-16px mb-16px>
         <div font-bold text-24px mb-6px>Top Collector Buys Today</div>
-        <div class="flex flex-nowrap py-10px linear-bg-nav-select">
+        <div class="flex py-10px linear-bg-nav-select">
             <div
                 class="card mr-16px mb-20px"
                 v-for="card in cardsList"
                 :key="card.id"
             >
-                <img
-                    src="@/assets/background.jpg"
+                <div
                     w-full
                     h-200px
                     rounded-t-20px
+                    class="linear-bg-nav-card-img"
+                    :style="{
+                        backgroundImage: 'url(' + card.url + ')',
+                    }"
                 />
                 <div p-16px>
                     <div font-bold>{{ card.name }}</div>
@@ -94,21 +115,57 @@
     </div>
 </template>
 <script setup lang="ts">
+const coverImgName = 'https://p.ipic.vip/v0144p.jpeg'
+
 const indexButtonList = [
     { id: 0, value: 'All' },
-    { id: 1, value: 'Art' },
-    { id: 2, value: 'Gaming' },
-    { id: 3, value: 'Memberships' },
-    { id: 4, value: 'PFPs' },
-    { id: 5, value: 'Photography' },
+    { id: 1, value: 'Carbon' },
+    { id: 2, value: 'Memberships' },
+    { id: 3, value: 'Other' },
 ]
 const cardsList = [
-    { id: 0, name: 'Nakamigos', floor: 0.73, volume: 1333 },
-    { id: 1, name: 'XXD34D', floor: 0.01, volume: 52 },
-    { id: 2, name: 'Delabs Adventure Pass Official', floor: 0.14, volume: 100 },
-    { id: 4, name: 'Gemesis', floor: 0.04, volume: 405 },
-    { id: 5, name: 'Gemesis', floor: 0.04, volume: 405 },
-    { id: 6, name: 'Gemesis', floor: 0.04, volume: 405 },
+    {
+        id: 0,
+        name: 'Nakamigos',
+        floor: 0.73,
+        volume: 1333,
+        url: 'https://p.ipic.vip/bx2om2.png',
+    },
+    {
+        id: 1,
+        name: 'XXD34D',
+        floor: 0.01,
+        volume: 52,
+        url: 'https://p.ipic.vip/qsip1v.png',
+    },
+    {
+        id: 2,
+        name: 'Delabs Adventure Pass Official',
+        floor: 0.14,
+        volume: 100,
+        url: 'https://p.ipic.vip/lwm1sc.png',
+    },
+    {
+        id: 4,
+        name: 'Gemesis',
+        floor: 0.04,
+        volume: 405,
+        url: 'https://p.ipic.vip/tmultl.png',
+    },
+    {
+        id: 5,
+        name: 'Gemesis',
+        floor: 0.04,
+        volume: 405,
+        url: 'https://p.ipic.vip/q4hlqh.png',
+    },
+    {
+        id: 6,
+        name: 'Gemesis',
+        floor: 0.04,
+        volume: 405,
+        url: 'https://p.ipic.vip/rlx28c.png',
+    },
 ]
 
 const selectNum = ref(0)
@@ -120,7 +177,6 @@ const toPage = (id: number) => {
 
 <style scoped>
 .box-bg {
-    background-image: url('@/assets/background.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -161,6 +217,17 @@ const toPage = (id: number) => {
 .linear-bg-nav-select::-webkit-scrollbar {
     width: 0 !important;
 }
+.linear-bg-carousel-button {
+    padding: 0 20px;
+    height: 40px;
+    border-radius: 10px;
+    font-weight: 500;
+    color: #ffffff;
+    background: rgba(216, 216, 216, 0.2);
+
+    backdrop-filter: blur(16px);
+}
+
 .linear-bg-button-selected {
     background-color: rgba(255, 255, 255, 0.4);
 }
@@ -170,12 +237,16 @@ const toPage = (id: number) => {
     cursor: pointer;
 }
 .linear-bg-carousel-img:hover {
-    transform: scale(1.1);
-    transition: all 0.3s;
+    transform: scale(1.02);
+    transition: all 0.4s;
 }
 .linear-bg-carousel-img {
     transition: all 0.3s;
-    background-image: url('@/assets/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+.linear-bg-nav-card-img {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
